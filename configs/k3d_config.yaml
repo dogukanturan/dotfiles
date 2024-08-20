@@ -1,0 +1,33 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: "local"
+servers: 1
+agents: 0${agents}
+kubeAPI:
+  host: "localhost"
+  hostIP: "127.0.0.1"
+  hostPort: "6443"
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+options:
+  k3s:
+    extraArgs:
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:*
+registries: {}
+#  create:
+#    name: k3d-registry
+#    host: "127.0.0.1"
+#    hostPort: "10"
+#  config: |
+#    mirrors:
+#      "registry":
+#        endpoint:
+#          - http://registry:10

@@ -1,0 +1,17 @@
+# system
+alias ll="ls -lhrt --color=tty"
+alias l="ls -lahrt --color=tty"
+alias dot='~/dotfiles'
+alias monitor='bpytop'
+alias reset-mouse='sudo  modprobe -r psmouse'
+
+# docker
+alias docker-rm-dangling='docker rmi -f $(docker images -f "dangling=true" -q)'
+
+# kubernetes
+alias k3d-create="k3d cluster create --config ~/source/devops/ops/kubernetes/k3d/k3d_config.yaml"
+
+# misc
+alias echo-path="echo $PATH | sed 's/:/\n/g'"
+
+alias watch='watch '

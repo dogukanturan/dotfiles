@@ -1,0 +1,39 @@
+[user]
+	name = Dogukan Turan
+	email = git@dogukanturan.com
+	signingkey = 26260FED1F1966F8
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = true
+[branch]
+	autosetuprebase = always
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim
+	pager = diff-so-fancy | less --tabs=4 -RFX
+	excludesFile = ~/.gitignore_global
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+	func = 146 bold
+[interactive]
+	diffFilter = diff-so-fancy --patch
+[alias]
+    pub = "!f(){ git push -u origin HEAD; };f"
+    rank = "shortlog -s -n --no-merges"
+[commit]
+  gpgsign = true
+[tag]
+  gpgsign = true

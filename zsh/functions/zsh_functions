@@ -1,0 +1,127 @@
+function display-hz () {
+    xrandr --newmode "1920x1080_75.00"  220.75  1920 2064 2264 2608  1080 1083 1088 1130 -hsync +vsync
+    xrandr --verbose --addmode HDMI-1 "1920x1080_75.00"
+    xrandr --output HDMI-1 --mode "1920x1080_75.00"
+}
+
+function check-reboot () {
+    if [[ -f /var/run/reboot-required ]]; then
+        echo "Reboot Required ($?)"
+    else
+        echo "Reboot Not Required ($?)";
+    fi
+}
+
+function check-zombie-process () {
+    echo "$(ps axo pid=,stat=,command= | awk '$2~/^Z/')"
+    echo -n "\nDo you want to kill processes y/h: "; read req
+    if [[ $req == 'y' ]]; then 
+      sudo kill `ps -A -ostat,ppid | awk '/[zZ]/ && !a[$2]++ {print $2}'`
+    else
+        return 0
+    fi
+}
+
+# docker apps
+
+function redis-cli () {
+  docker run -i -t redis -- redis-cli $@
+}
+
+function get-cm-command () {
+    if [[ $# -lt 2 ]]; then
+        echo -e "Usage:\n\tget-cm-command <config-dir> <config-file> <empty or diff>"
+        return 1
+    fi
+
+    if [[ $3 == 'diff' ]]; then
+        for i in `git status $1 -s *properties | tr -d 'M ' | awk -F'.' '{print $1}' | awk -F'/' '{print $1}'`; do grep $i $2; done | sed 's/apply/diff/g'
+    else
+        for i in `git status $1 -s *properties | tr -d 'M ' | awk -F'.' '{print $1}' | awk -F'/' '{print $1}'`; do grep $i $2; done
+    fi
+}
+
+function curltime () {
+  curl -s -w @/home/dturan/.curl_format $@
+}
+
+function cheat () {
+  curl cheat.sh/$@
+}
+
+function update-kubectl () {
+  latest_version=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+  current_version=""
+
+  if ! where kubectl &>/dev/null; then
+    echo "Kubectl not found. Installing..."
+    curl -sLO "https://dl.k8s.io/release/$latest_version/bin/linux/amd64/kubectl"
+    if [ $? -eq 0 ]; then
+      chmod +x kubectl
+      sudo mv ./kubectl /usr/local/bin
+      current_version=$(kubectl version -o=json 2>/dev/null | jq -r '.clientVersion.gitVersion')
+      echo "after_update_version=$current_version"
+      echo "Kubectl successfully installed"
+      return 0
+    fi
+    echo "Kubectl not installed"
+    return 1
+  fi
+
+  current_version=$(kubectl version -o=json 2>/dev/null | jq -r '.clientVersion.gitVersion')
+
+  if [[ $current_version == $latest_version ]]; then
+    echo "Update not required, you're already updated version: $current_version"
+    return 1
+  fi
+
+  curl -sLO "https://dl.k8s.io/release/$latest_version/bin/linux/amd64/kubectl"
+  if [[ ! $? -eq 0 ]];
+    then echo "curl is nok";
+  fi
+
+  chmod +x kubectl
+  sudo mv ./kubectl /usr/local/bin
+  echo "after_update_version=$current_version"
+}
+
+function k9s {
+  docker run --rm -it -v ~/.kube/config:/root/.kube/config quay.io/derailed/k9s:latest
+}
+
+function watch-pod () {
+    #check-vpn
+    if [[ -z $1 ]]; then
+        watch "kubectl get pod | grep -viE '1/1|2/2|3/3|4/4'"
+    else
+        watch kubectl get pod -lapp=$1
+    fi
+}
+
+function k8s-service-recreate () {
+  service_name=$@
+  file=$(mktemp)
+  kubectl get svc $service_name -o yaml | tee $file
+  echo; echo
+  kubectl delete svc $service_name
+  kubectl apply -f $file
+}
+
+function kubeconfig-merge-and-backup () {
+  configFile=$1
+  tempKubeConfigName=~/kubeconfig-merged
+  kubeConfigPath=~/.kube/config
+  kubeConfigBackupFileName=~/.kube/config-bak
+  
+  if [[ -z $1 ]]; then
+    echo -e "Usage:\n\t$0 CONFIGFILE (Provide the path to the kubeconfig file to be merged.)"
+    echo -e "Example:\n\t$0 ~/new-config"
+    return 2
+  else
+    cp $kubeConfigPath $kubeConfigBackupFileName
+    kubectl konfig merge $kubeConfigPath $configFile > $tempKubeConfigName
+    mv $tempKubeConfigName $kubeConfigPath
+    echo "success"
+    return 0
+  fi
+}

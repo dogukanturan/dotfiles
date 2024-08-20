@@ -1,0 +1,88 @@
+# ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ]; then
+  PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ]; then
+  PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [ -d "${KREW_ROOT:-$HOME/.krew}/bin" ]; then
+  PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+fi
+
+if [ -d "/opt/diff-so-fancy" ]; then
+  PATH="$PATH:/opt/diff-so-fancy"
+fi
+
+if [ -d "$HOME/.local/share/JetBrains/Toolbox" ]; then
+  PATH="$PATH:/home/dturan/.local/share/JetBrains/Toolbox/scripts" # Added by Toolbox App
+fi
+
+if [ -d "$HOME/.jdks/openjdk-21/bin" ]; then
+  PATH=$PATH:$HOME/.jdks/openjdk-21/bin
+fi
+
+if [ -d "$HOME/.local/kitty.app/bin" ]; then
+  PATH=$PATH:$HOME/.local/kitty.app/bin
+fi
+
+if [ -d "$HOME/.functions/" ]; then
+  source $HOME/.functions/zsh_functions
+fi
+
+if [ -f "$HOME/.kubectl_aliases" ]; then
+  source $HOME/.kubectl_aliases
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # The next line updates PATH for the Google Cloud SDK.
+    if [ -f '/Users/dturan/.google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dturan/.google-cloud-sdk/path.zsh.inc'; fi
+    # The next line enables shell command completion for gcloud.
+    if [ -f '/Users/dturan/.google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/dturan/.google-cloud-sdk/completion.zsh.inc'; fi
+fi
+
+export KUBE_EDITOR="nvim"
+
+# Set PATH, MANPATH, etc., for Homebrew.
+if [[ -d /opt/homebrew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  if [[ -f ~/.Brewfile ]]; then
+    export HOMEBREW_BUNDLE_FILE="~/.Brewfile"
+  fi
+fi
+
+# Setting PATH for Python 3.10
+# The original version is saved in .zprofile.pysave
+PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.10/bin
+
+# Secret!
+export GITHUB_USER=dogukanturan
+export GPG_TTY=$(tty)
+
+export GPG_TTY=$(tty)
+
+export PATH=$PATH:/sbin
+# Golang
+export PATH=$PATH:/usr/local/go/bin
+
+export GO111MODULE=auto
+
+if [ -d "$HOME/source/devops/dev/go" ]; then
+  export GOPATH=$HOME/source/devops/dev/go
+  PATH=$PATH:$GOPATH/bin
+fi
+
+# Added by OrbStack: command-line tools and integration
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :
