@@ -29,6 +29,32 @@ endif
 
 	[ -f ~/source/devops/ops/kubernetes/k3d/k3d_config.yaml ] || ln -snf $(PWD)/configs/k3d_config.yaml ~/source/devops/ops/kubernetes/k3d/k3d_config.yaml
 
+copy:
+	mkdir -p ~/.tmux
+	mkdir -p ~/source/devops/{dev,ops}/
+	mkdir -p ~/source/devops/ops/kubernetes/k3d
+
+ifeq ($(UNAME), Darwin)
+	[ -f ~/.Brewfile ] || cp $(PWD)/Brewfile ~/.Brewfile
+endif
+	[ -f ~/.functions ] || cp -R $(PWD)/zsh/functions ~/.functions
+	[ -f ~/.config/nvim ] || cp -R $(PWD)/nvim ~/.config/nvim
+	[ -f ~/.config/kitty ] || cp -R $(PWD)/kitty ~/.config/kitty
+
+	[ -f ~/.zshrc ] || cp $(PWD)/zsh/zshrc ~/.zshrc
+	[ -f ~/.zsh_aliases ] || cp $(PWD)/zsh/zsh_aliases ~/.zsh_aliases
+	[ -f ~/.zprofile ] || cp $(PWD)/zsh/zprofile ~/.zprofile
+	[ -f ~/.p10k.zsh ] || cp $(PWD)/zsh/p10k.zsh ~/.p10k.zsh
+
+	[ -f ~/.gitconfig ] || cp $(PWD)/gitconfig ~/.gitconfig
+	[ -f ~/.gitignore_global ] || cp $(PWD)/gitignore_global ~/.gitignore_global
+
+	[ -f ~/.kubectl_aliases ] || cp $(PWD)/kubectl_aliases ~/.kubectl_aliases
+
+	[ -f ~/.tmux.conf ] || cp $(PWD)/tmux.conf ~/.tmux.conf
+	[ -f ~/.curl_format ] || cp $(PWD)/curl_format ~/.curl_format
+
+	[ -f ~/source/devops/ops/kubernetes/k3d/k3d_config.yaml ] || cp $(PWD)/configs/k3d_config.yaml ~/source/devops/ops/kubernetes/k3d/k3d_config.yaml
 
 clean:
 	rm -rfv ~/.functions
@@ -54,4 +80,4 @@ clean:
 
 	rm -fv ~/source/devops/ops/kubernetes/k3d/k3d_config.yaml
 
-.PHONY: all clean sync
+.PHONY: all clean sync copy

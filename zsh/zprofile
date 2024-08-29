@@ -67,12 +67,6 @@ fi
 # The original version is saved in .zprofile.pysave
 PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.10/bin
 
-# Secret!
-export GITHUB_USER=dogukanturan
-export GPG_TTY=$(tty)
-
-export GPG_TTY=$(tty)
-
 export PATH=$PATH:/sbin
 # Golang
 export PATH=$PATH:/usr/local/go/bin

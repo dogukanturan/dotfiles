@@ -5,10 +5,9 @@ DATE=$(date "+%F %H:%M:%S")
 function usage {
     clear
     echo -e "MAKE A CHOICE\n"
-    echo -e "1) SYSTEM TOOLS"
-    echo -e "2) ZSH PLUGINS"
-    echo -e "3) KUBECTL PLUGINS"
-    echo -e "4) TMUX PLUGINS\n"
+    echo -e "1) ZSH PLUGINS"
+    echo -e "2) KUBECTL PLUGINS"
+    echo -e "3) TMUX PLUGINS\n"
     read -p "Make a selection: " choice; echo
 }
 
@@ -17,21 +16,6 @@ if [[ -z $choice ]]; then
     usage
 fi
 
-function system_tools {
-    echo -e "\nInstalling system tools...\n"
-    sudo apt update && sudo apt install -y \
-        curl \
-        wget \
-        vim \
-        iputils-ping \
-        gpg
-
-    if [[ $? -eq 0 ]]; then 
-        echo -e "\n[+] System tools successfully installed"
-    else 
-        echo -e "\n[-] System tools failed to install"
-    fi
-}
 
 function zsh_plugins {
     echo -e "Installing plugin --> zsh-completions"
@@ -71,6 +55,7 @@ function zsh_plugins {
 
 }
 
+
 function install_krew {
     echo -e "\nKrew is not installed. Installing Krew..."
     (
@@ -86,6 +71,7 @@ function install_krew {
     echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> ~/.zshrc
     source ~/.zshrc
 }
+
 
 function kubernetes_plugins {
     plugin_list=(
@@ -121,6 +107,7 @@ function kubernetes_plugins {
     fi
 }
 
+
 function tmux_plugins {
     TMUX_DIR=~/.tmux
 
@@ -128,23 +115,21 @@ function tmux_plugins {
         mkdir $TMUX_DIR
         return 1
     fi
-    
+
     git clone https://github.com/tmux-plugins/tpm $TMUX_DIR/plugins/tpm
     if [[ $? -eq 0 ]]; then
         echo -e "[+] Tmux TPM successfully installed.\n"
     else
         echo -e "[-] Tmux TPM failed to install.\n"
-    fi 
+    fi
 }
 
 case $choice in
-    1) system_tools
+    1) zsh_plugins
     ;;
-    2) zsh_plugins
+    2) kubernetes_plugins
     ;;
-    3) kubernetes_plugins
-    ;;
-    4) tmux_plugins
+    3) tmux_plugins
     ;;
     *) usage
     ;;
