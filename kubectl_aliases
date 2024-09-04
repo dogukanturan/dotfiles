@@ -816,4 +816,4 @@ function kexall () { kubectl tmux-exec -lapp=$@ -- /bin/bash; }
 alias kubectx="kubectl config use-context"
 alias kctx="kubectl config use-context"
 alias k-restarted-pods="kubectl get pods --all-namespaces | awk '\$5>0'"
-alias k-check-pod='kubectl get pods -A --field-selector=status.phase!=Succeeded,status.phase!=Running --no-headers -o custom-columns=Namespace:.metadata.namespace,Name:.metadata.name,Status:.status.phase'
+alias k-check-pod="kubectl get pod -A | grep -Ev 'Running|Completed'"
