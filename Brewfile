@@ -17,7 +17,6 @@ brew "jq"
 brew "iproute2mac"
 brew "neovim"
 brew "gnupg"
-brew "fish"
 
 # DevOps Tools
 brew "kubernetes-cli"
@@ -40,6 +39,7 @@ brew "glow"
 brew "k3d"
 brew "k6"
 brew "chainctl"
+brew "fzf"
 
 # Fun tools
 brew "asciinema"
@@ -59,5 +59,5 @@ cask "notion"
 cask "orbstack"
 cask "google-cloud-sdk"
 cask "qbittorrent"
-cask "utm"
 cask "google-chrome"
+cask "alacritty"

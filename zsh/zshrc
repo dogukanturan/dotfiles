@@ -157,3 +157,5 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 source $HOME/.zsh_aliases
+source <(fzf --zsh)
+
