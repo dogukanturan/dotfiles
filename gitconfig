@@ -1,6 +1,6 @@
 [user]
 	name = Dogukan Turan
-	email = mail@dogukanturan.com
+	email = dogukanturanx@gmail.com
 	signingkey = 26260FED1F1966F8
 [color]
 	diff = auto
@@ -34,6 +34,8 @@
     pub = "!f(){ git push -u origin HEAD; };f"
     rank = "shortlog -s -n --no-merges"
 [commit]
-  gpgsign = true
+	gpgsign = true
 [tag]
   gpgsign = true
+[gpg]
+	program = gpg

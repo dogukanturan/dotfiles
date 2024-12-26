@@ -30,7 +30,6 @@ plugins=(
   web-search
   dirhistory
   gcloud
-  docker
   ubuntu
   supervisor
   systemd
