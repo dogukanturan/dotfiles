@@ -15,3 +15,4 @@ alias k3d-create="k3d cluster create --config ~/source/devops/ops/kubernetes/k3d
 alias echo-path="echo $PATH | sed 's/:/\n/g'"
 
 alias watch='watch '
+

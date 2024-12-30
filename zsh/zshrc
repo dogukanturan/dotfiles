@@ -21,12 +21,12 @@ fi
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
+
 plugins=(
   git
   zsh-autosuggestions
   zsh-completions
   zsh-syntax-highlighting
-  kubetail
   web-search
   dirhistory
   gcloud
@@ -39,17 +39,7 @@ plugins=(
   nmap
   httpie
   jira
-  pip
-  virtualenv
-  colored-man-pages
   tmux
-  vagrant
-  minikube
-  aws
-  brew
-  ansible
-  docker-compose
-  man
 )
 
 # "robbyrussell"
@@ -156,5 +146,5 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 source $HOME/.zsh_aliases
-source <(fzf --zsh)
 
+source <(fzf --zsh)

@@ -15,7 +15,7 @@ function check-reboot () {
 function check-zombie-process () {
     echo "$(ps axo pid=,stat=,command= | awk '$2~/^Z/')"
     echo -n "\nDo you want to kill processes y/h: "; read req
-    if [[ $req == 'y' ]]; then 
+    if [[ $req == 'y' ]]; then
       sudo kill `ps -A -ostat,ppid | awk '/[zZ]/ && !a[$2]++ {print $2}'`
     else
         return 0
@@ -112,7 +112,7 @@ function kubeconfig-merge-and-backup () {
   tempKubeConfigName=~/kubeconfig-merged
   kubeConfigPath=~/.kube/config
   kubeConfigBackupFileName=~/.kube/config-bak
-  
+
   if [[ -z $1 ]]; then
     echo -e "Usage:\n\t$0 CONFIGFILE (Provide the path to the kubeconfig file to be merged.)"
     echo -e "Example:\n\t$0 ~/new-config"
@@ -123,5 +123,15 @@ function kubeconfig-merge-and-backup () {
     mv $tempKubeConfigName $kubeConfigPath
     echo "success"
     return 0
+  fi
+}
+
+function kube-export () {
+  podName=$1
+  kubectl logs $podName > /mnt/c/Users/Dogukan.Turan/Downloads/Logs/$podName.log
+  if [[ $? -eq 0 ]]; then
+    echo "[+] Logs exported to /mnt/c/Users/Dogukan.Turan/Downloads/Logs/$podName.log"
+  else
+    echo "[-] Export failed"
   fi
 }
