@@ -135,3 +135,31 @@ function kube-export () {
     echo "[-] Export failed"
   fi
 }
+
+function k-resource-on() {
+  if [ -z "$1" ]; then
+    echo "Example: k-resource-on node1"
+    return 1
+  fi
+
+  NODE_NAME=$1
+  kubectl top pod -A | grep -E "$(kubectl get pods -A -o wide | grep $NODE_NAME | awk '{print $2}' | paste -sd '|' -)" | sort -k4 -hr
+}
+
+function k-get-helm-cmd () {
+  dir=$1
+
+  if [[ -z $dir ]]; then
+      echo "$0 <values-folder>"
+      return 1
+  fi
+
+  for i in $(ls $dir); do
+      serviceName=$(echo $i | awk -F'-values' '{print $1}')
+      valuesFile=$dir/$i
+      brandName=$(echo $i | awk -F'-' '{print $1}')-
+      echo "helm upgrade --install $serviceName --values $valuesFile ."
+  done
+
+  return 0
+}

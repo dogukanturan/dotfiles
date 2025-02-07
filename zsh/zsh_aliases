@@ -16,3 +16,4 @@ alias echo-path="echo $PATH | sed 's/:/\n/g'"
 
 alias watch='watch '
 
+alias vim="nvim"
