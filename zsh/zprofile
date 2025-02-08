@@ -83,5 +83,4 @@ source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
 export GPG_TTY=$(tty)
 
-export XDG_CONFIG_HOME=~/.config/ghostty
 export WINDOWSHOME='/mnt/c/Users/Dogukan.Turan'
