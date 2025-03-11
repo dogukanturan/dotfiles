@@ -163,3 +163,22 @@ function k-get-helm-cmd () {
 
   return 0
 }
+
+function ssh-config-copy() {
+  local user="$1"
+  local hostname="$2"
+  local ip_address="$3"
+
+  if [[ -z "$user" || -z "$hostname" || -z "$ip_address" ]]; then
+    echo "Usage: ssh-config-copy <username> <hostname> <ip_address>"
+    return 1
+  fi
+
+  ssh-copy-id "$user@$ip_address" && {
+    echo "Host $hostname\n\tHostName $ip_address\n\tUser $user" >> ~/.ssh/config
+    echo "SSH configuration added for $hostname."
+  } || {
+    echo "ssh-copy-id failed."
+    return 1
+  }
+}
