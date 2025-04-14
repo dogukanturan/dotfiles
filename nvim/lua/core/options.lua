@@ -30,3 +30,7 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.autoindent = true
 vim.opt.wrap = true
+
+-- Configure vim-airline
+vim.g.airline_powerline_fonts = 1
+vim.g.airline_theme = 'dark'
