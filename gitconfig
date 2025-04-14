@@ -1,12 +1,21 @@
 [user]
 	name = Dogukan Turan
-	email = dogukan.turan@logo.com.tr
-	signingkey = 19BD139311F36976
+	email = dogukanturan@protonmail.com
+	signingkey = 26260FED1F1966F8
+[alias]
+  pub = "!f(){ git push -u origin HEAD; };f"
+  rank = "shortlog -s -n --no-merges"
+  st = status -sb
+  cs = commit -S
+  co = checkout
+  di = diff
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 [color]
 	diff = auto
 	status = auto
 	branch = auto
-	ui = true
+	ui = auto
 [branch]
 	autosetuprebase = always
 [init]
@@ -30,12 +39,11 @@
 	func = 146 bold
 [interactive]
 	diffFilter = diff-so-fancy --patch
-[alias]
-    pub = "!f(){ git push -u origin HEAD; };f"
-    rank = "shortlog -s -n --no-merges"
 [commit]
 	gpgsign = true
 [tag]
   gpgsign = true
 [gpg]
 	program = gpg
+[url "git@github.com:"]
+	insteadOf = https://github.com/
