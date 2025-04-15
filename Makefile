@@ -14,7 +14,7 @@ endif
 	ln -snf $(PWD)/fish/config.fish $(FISH_CONFIG_DIR)/config.fish
 	ln -snf $(PWD)/fish/abbr.fish $(FISH_CONFIG_DIR)/conf.d/abbr.fish
 	ln -snf $(PWD)/fish/env.fish $(FISH_CONFIG_DIR)/conf.d/env.fish
-	ln -snf $(PWD)/fish/kubectl_aliases.fish ~/.kubectl_aliases.fish
+	ln -snf $(PWD)/kubectl_aliases.fish ~/.kubectl_aliases.fish
 
 	ln -snf $(PWD)/nvim ~/.config/nvim
 	ln -snf $(PWD)/gitconfig ~/.gitconfig
