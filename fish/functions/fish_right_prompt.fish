@@ -1,6 +1,6 @@
 function fish_right_prompt
     set last_status $status
-    set -l date (date +%H:%m:%S)
+    set -l date (date +"%T")
     set -l kube_icon '⎈'
     set -l context (kubectl config current-context 2>/dev/null)
     set -l namespace (kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null)
