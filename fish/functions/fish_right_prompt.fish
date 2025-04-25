@@ -1,5 +1,4 @@
 function fish_right_prompt
-    set last_status $status
     set -l date (date +"%T")
     set -l kube_icon '⎈'
     set -l context (kubectl config current-context 2>/dev/null)
@@ -9,7 +8,7 @@ function fish_right_prompt
         set namespace default
     end
 
-    if test $last_status -ne 0
+    if test $status -ne 0
         echo -n (set_color red) "⚠️ $last_status "
     end
 
@@ -25,6 +24,6 @@ function fish_right_prompt
     end
     
     echo -n (set_color $color)"$kube_icon $context/$namespace "(set_color normal)
-    echo -n " $date"
+    # echo -n " $date"
 end
 

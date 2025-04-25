@@ -29,18 +29,18 @@ end
 
 function ssh-config-copy
     set user $argv[1]
-    set hostname $argv[2]
+    set host_name $argv[2]
     set ip_address $argv[3]
 
-    if test -z "$user" -o -z "$hostname" -o -z "$ip_address"
+    if test -z "$user" -o -z "$host_name" -o -z "$ip_address"
         echo "Usage: ssh-config-copy <username> <hostname> <ip_address>"
         return 1
     end
 
     ssh-copy-id "$user@$ip_address"
     if test $status -eq 0
-        echo -e "Host $hostname\n\tHostName $ip_address\n\tUser $user" >> ~/.ssh/config
-        echo "SSH configuration added for $hostname."
+        echo -e "Host $host_name\n\tHostName $ip_address\n\tUser $user" >> ~/.ssh/config
+        echo "SSH configuration added for $host_name."
     else
         echo "ssh-copy-id failed."
         return 1

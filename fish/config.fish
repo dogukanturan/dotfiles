@@ -4,4 +4,3 @@ if status is-interactive
   test -f ~/.kubectl_aliases.fish && source ~/.kubectl_aliases.fish
   kubectl completion fish | source
 end
-
