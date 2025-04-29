@@ -6,6 +6,7 @@ all: sync
 
 sync:
 	mkdir -p ~/source/devops/{dev,ops}/
+	mkdir -p ~/.config/ghostty
 
 ifeq ($(UNAME), Darwin)
 	[ -f ~/.Brewfile ] || ln -snf $(PWD)/Brewfile ~/.Brewfile
@@ -24,10 +25,10 @@ endif
 	ln -snf $(PWD)/tmux.conf ~/.config/tmux/tmux.conf
 
 	ln -snf $(PWD)/curl_format ~/.curl_format
+	ln -snf $(PWD)/ghostty.config ~/.config/ghostty/config
 
 
 clean:
-	# Temizleme işlemleri
 	rm -rfv $(FISH_CONFIG_DIR)/functions
 	rm -rfv $(FISH_CONFIG_DIR)/config.fish
 	rm -rfv $(FISH_CONFIG_DIR)/conf.d/abbr.fish
@@ -40,5 +41,6 @@ clean:
 	rm -fv ~/.tmux.conf
 	rm -rfv ~/.tmux
 	rm -fv ~/.curl_format
+	rm -fv ~/.config/ghostty/config
 
 .PHONY: all clean sync
