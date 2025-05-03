@@ -4,7 +4,7 @@
 [user]
 	name = Dogukan Turan
 	email = dogukanturan@protonmail.com
-	signingkey = 26260FED1F1966F8
+	signingkey = 17EF4808022FA1FD
 
 [includeIf "gitdir:/home/dturan/source/"]
   path = /home/dturan/.gitconfig_innovance

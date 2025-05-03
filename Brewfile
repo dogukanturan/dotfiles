@@ -1,6 +1,3 @@
-# Tap's
-brew "mas"
-
 # Macos Tools
 brew "diff-so-fancy"
 brew "pstree"
@@ -13,7 +10,7 @@ brew "telnet"
 brew "jq"
 brew "iproute2mac"
 brew "neovim"
-brew "gnupg"
+brew "gpg"
 
 # DevOps Tools
 brew "kubernetes-cli"
@@ -32,24 +29,15 @@ brew "aicommits"
 brew "node"
 brew "glow"
 brew "k3d"
+brew "kind"
 brew "k6"
 brew "fzf"
 brew "aws-shell"
 brew "ripgrep"
 brew "fd"
+brew "fish"
+brew "tmux"
+brew "bat"
 
-# Fun tools
-brew "asciinema"
-brew "lolcat"
-
-# Desktop Software
-cask "slack"
-cask "spotify"
-cask "discord"
-cask "iterm2"
-cask "visual-studio-code"
-cask "postman"
-cask "jetbrains-toolbox"
-cask "notion"
-cask "google-cloud-sdk"
-cask "orbstack"
+# Cask
+cask "ghostty"
