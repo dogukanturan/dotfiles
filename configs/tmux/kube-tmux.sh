@@ -6,8 +6,8 @@ stagingColor="fg=#1A1A1A,bg=orange"
 prodColor="fg=#1A1A1A,bg=#ff0048"
 
 function main(){
-    local clusterName=$(kubectl ctx -c)
-    local clusterNamespace=$(kubectl ns -c)
+    local clusterName=$(kubectx -c)
+    local clusterNamespace=$(kubens -c)
 
     if echo "$clusterName" | grep "test"; then
         echo "#[$testColor] ${clusterName}:${clusterNamespace} #[$testColor]"
