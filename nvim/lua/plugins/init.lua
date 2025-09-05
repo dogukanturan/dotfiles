@@ -5,4 +5,5 @@ return {
   { import = "plugins.tokyonight" },
   { import = "plugins.cyberpunk" },
   { import = "plugins.airline" },
+  { import = "plugins.vim-go" },
 }

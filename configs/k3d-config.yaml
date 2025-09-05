@@ -1,0 +1,33 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: k3d
+servers: 1
+agents: 0
+image: rancher/k3s:v1.33.2-k3s1-arm64
+kubeAPI:
+  #host: "api.k3d.local"
+  hostIP: "0.0.0.0"
+  hostPort: "6445"
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+  - port: 6550:6550
+    nodeFilters:
+      - loadbalancer
+options:
+  k3d:
+    wait: true
+  kubeconfig:
+    updateDefaultKubeconfig: true
+    switchCurrentContext: true
+  k3s:
+    extraArgs:
+      - arg: "--disable=traefik"
+        nodeFilters:
+          - server:0
+
