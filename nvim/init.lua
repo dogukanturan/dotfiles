@@ -1,4 +1,3 @@
--- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -12,15 +11,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Set leader key before lazy
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Load core configurations
 require("core.options")
 require("core.keymaps")
 
--- Initialize plugins
 require("lazy").setup("plugins")
 
-vim.cmd[[colorscheme silverhand]]
+pcall(vim.cmd, "colorscheme silverhand")

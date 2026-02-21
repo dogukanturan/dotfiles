@@ -1,24 +1,10 @@
 #!/bin/bash
 
 zeroText="container:0"
-containerCount=$(docker ps -q | wc -l | tr -d [:blank:])
+containerCount=$(docker ps -q 2>/dev/null | wc -l | tr -d '[:blank:]')
 
-function checkWsl() {
-  if $(docker ps -q | grep -q "WSL"); then
-    echo $zeroText
-    exit
-  fi
-}
-
-function main() {
-  checkWsl
-  if [ $containerCount -gt 0 ]; then
-      echo "container:$containerCount"
-      exit
-  else
-      echo $zeroText
-      exit
-  fi
-}
-
-main
+if [ "${containerCount:-0}" -gt 0 ] 2>/dev/null; then
+  echo "container:$containerCount"
+else
+  echo "$zeroText"
+fi

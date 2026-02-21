@@ -1,8 +1,10 @@
-# system
-alias ll="ls -lhrt --color=tty"
-alias l="ls -lahrt --color=tty"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias ll="ls -lhrtG"
+  alias l="ls -lahrtG"
+else
+  alias ll="ls -lhrt --color=tty"
+  alias l="ls -lahrt --color=tty"
+fi
 
-# docker
-alias docker-rm-dangling='docker rmi -f $(docker images -f "dangling=true" -q)'
-
+alias docker-rm-dangling='docker image prune -f'
 alias vim="nvim"

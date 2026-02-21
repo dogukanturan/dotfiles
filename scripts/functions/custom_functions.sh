@@ -39,17 +39,19 @@ function ssh_config_copy() {
         return 1
     fi
 
-    ssh-copy-id "$user@$ip_address"
-    if [[ $? -eq 0 ]]; then
-        {
-            echo "Host $host_name"
-            echo "    HostName $ip_address"
-            echo "    User $user"
-        } >> ~/.ssh/config
-        echo "SSH configuration added for $host_name."
-    else
+    if ! ssh-copy-id "$user@$ip_address"; then
         echo "ssh-copy-id failed."
         return 1
     fi
+    if grep -q "^Host ${host_name}$" ~/.ssh/config 2>/dev/null; then
+        echo "Host $host_name already exists in ~/.ssh/config; skipping append."
+        return 0
+    fi
+    {
+        echo "Host $host_name"
+        echo "    HostName $ip_address"
+        echo "    User $user"
+    } >> ~/.ssh/config
+    echo "SSH configuration added for $host_name."
 }
 

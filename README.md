@@ -19,16 +19,20 @@ First, you need to prepare your environment. Run the following command in your t
 make all
 ```
 
-This command will:
+This will create symlinks for:
 
+- Neovim, Git, Zsh (`.zshrc`, `.zprofile`, `.zsh_aliases`), tmux, Ghostty, and curl config
+- On macOS: `Brewfile` for Homebrew bundle
 
 ## Step 2: Plugin Installation
 
-After setting up the environment, you need to install various plugins. To do this, run the install_plugins.sh script:
+After setting up the environment, you can install ZSH, kubectl (Krew), and tmux plugins:
 
 ```bash
-./install_plugins.sh
+./scripts/install_zsh_plugins.sh
 ```
+
+When prompted, choose 1 for ZSH plugins, 2 for kubectl plugins, or 3 for tmux plugins (TPM).
 
 
 ## Clean Up

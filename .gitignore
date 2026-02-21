@@ -2,3 +2,7 @@ lazy-lock.json
 *_fzf*
 *__z*
 work/
+fish/fish_variables
+fish/completions/docker.fish
+fish/completions/kubectl.fish
+fish/completions/orbctl.fish

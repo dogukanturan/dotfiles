@@ -2,61 +2,57 @@
 
 DATE=$(date "+%F %H:%M:%S")
 
-function usage {
+usage() {
     clear
     echo -e "MAKE A CHOICE\n"
     echo -e "1) ZSH PLUGINS"
     echo -e "2) KUBECTL PLUGINS"
     echo -e "3) TMUX PLUGINS\n"
-    read -p "Make a selection: " choice; echo
+    read -p "Make a selection: " choice
+    echo
 }
 
-if [[ -z $choice ]]; then
-    echo -e "\nPlease enter a number!\n\n"
-    usage
+usage
+if [[ -z "$choice" ]]; then
+    echo -e "\nPlease enter a number!\n"
+    exit 1
 fi
 
-
-function zsh_plugins {
+zsh_plugins() {
     echo -e "Installing plugin --> zsh-completions"
     git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
-    if [[ $? -eq 0 ]]; then 
+    if [[ $? -eq 0 ]]; then
         echo -e "[+] Plugin successfully installed"
-    else 
+    else
         echo -e "[-] Plugin failed to install"
     fi
-
 
     echo -e "\nInstalling plugin --> zsh-autosuggestions"
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    if [[ $? -eq 0 ]]; then 
+    if [[ $? -eq 0 ]]; then
         echo -e "[+] Plugin successfully installed"
-    else 
+    else
         echo -e "[-] Plugin failed to install"
     fi
-
 
     echo -e "\nInstalling plugin --> zsh-syntax-highlighting"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    if [[ $? -eq 0 ]]; then 
+    if [[ $? -eq 0 ]]; then
         echo -e "[+] Plugin successfully installed"
-    else 
+    else
         echo -e "[-] Plugin failed to install"
     fi
-
 
     echo -e "\nInstalling plugin --> kubetail"
     git clone https://github.com/johanhaleby/kubetail.git ~/.oh-my-zsh/custom/plugins/kubetail
-    if [[ $? -eq 0 ]]; then 
+    if [[ $? -eq 0 ]]; then
         echo -e "[+] Plugin successfully installed"
-    else 
+    else
         echo -e "[-] Plugin failed to install"
     fi
-
 }
 
-
-function install_krew {
+install_krew() {
     echo -e "\nKrew is not installed. Installing Krew..."
     (
         set -x; cd "$(mktemp -d)" &&
@@ -68,12 +64,13 @@ function install_krew {
         ./"${KREW}" install krew
     )
     export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-    echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> ~/.zshrc
-    source ~/.zshrc
+    if ! grep -q 'KREW_ROOT.*bin' ~/.zshrc 2>/dev/null; then
+        echo '' >> ~/.zshrc
+        echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> ~/.zshrc
+    fi
 }
 
-
-function kubernetes_plugins {
+kubernetes_plugins() {
     plugin_list=(
         ctx
         df-pv
@@ -95,9 +92,9 @@ function kubernetes_plugins {
         for plugin in "${plugin_list[@]}"; do
             echo -e "$DATE Installing plugin --> ${plugin}"
             kubectl krew install "${plugin}" &> /dev/null
-            if [[ $? -eq 0 ]]; then 
+            if [[ $? -eq 0 ]]; then
                 echo -e "[+] Plugin successfully installed\n"
-            else 
+            else
                 echo -e "[-] Plugin failed to install\n"
             fi
         done
@@ -107,16 +104,14 @@ function kubernetes_plugins {
     fi
 }
 
+tmux_plugins() {
+    TMUX_DIR="${HOME:?}/.tmux"
 
-function tmux_plugins {
-    TMUX_DIR=~/.tmux
-
-    if [ ! -d $TMUX_DIR ]; then
-        mkdir $TMUX_DIR
-        return 1
+    if [ ! -d "$TMUX_DIR" ]; then
+        mkdir -p "$TMUX_DIR"
     fi
 
-    git clone https://github.com/tmux-plugins/tpm $TMUX_DIR/plugins/tpm
+    git clone https://github.com/tmux-plugins/tpm "$TMUX_DIR/plugins/tpm"
     if [[ $? -eq 0 ]]; then
         echo -e "[+] Tmux TPM successfully installed.\n"
     else
@@ -124,13 +119,9 @@ function tmux_plugins {
     fi
 }
 
-case $choice in
-    1) zsh_plugins
-    ;;
-    2) kubernetes_plugins
-    ;;
-    3) tmux_plugins
-    ;;
-    *) usage
-    ;;
+case "$choice" in
+    1) zsh_plugins ;;
+    2) kubernetes_plugins ;;
+    3) tmux_plugins ;;
+    *) echo "Invalid option."; exit 1 ;;
 esac
