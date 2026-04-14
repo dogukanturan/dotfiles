@@ -1,31 +1,35 @@
 UNAME := $(shell uname)
+PWD := $(shell pwd)
+HOME_DIR := $(HOME)
 
 all: sync
 
 sync:
-	mkdir -p ~/source/devops/{dev,ops}/
-	mkdir -p ~/.config/ghostty
-	mkdir -p ~/.config/tmux
+	mkdir -p $(HOME_DIR)/source/devops/dev/
+	mkdir -p $(HOME_DIR)/source/devops/ops
+	mkdir -p $(HOME_DIR)/.config/ghostty
+	mkdir -p $(HOME_DIR)/.config/tmux
+	mkdir -p $(HOME_DIR)/.config
 
 ifeq ($(UNAME), Darwin)
-	[ -f ~/.Brewfile ] || ln -snf $(PWD)/Brewfile ~/.Brewfile
+	[ -f $(HOME_DIR)/.Brewfile ] || ln -snf $(PWD)/Brewfile $(HOME_DIR)/.Brewfile
 endif
-	ln -snf $(PWD)/nvim ~/.config/nvim
-	ln -snf $(PWD)/gitconfig ~/.gitconfig
-	ln -snf $(PWD)/gitignore_global ~/.gitignore_global
+	rm -rf $(HOME_DIR)/.config/fish
+	ln -snf $(PWD)/fish $(HOME_DIR)/.config/fish
+	
+	rm -rf $(HOME_DIR)/.config/nvim
+	ln -snf $(PWD)/nvim $(HOME_DIR)/.config/nvim
 
-	ln -snf $(PWD)/zsh/zshrc ~/.zshrc
-	ln -snf $(PWD)/zsh/zprofile ~/.zprofile
-	ln -snf $(PWD)/zsh/zsh_aliases ~/.zsh_aliases
-
-	ln -snf $(PWD)/fish ~/.config/fish
-	ln -snf $(PWD)/kubectl_aliases.fish ~/.kubectl_aliases.fish
-
-	ln -snf $(PWD)/tmux.conf ~/.config/tmux/tmux.conf
-	ln -snf $(PWD)/tmux.conf ~/.tmux.conf
-
-	ln -snf $(PWD)/curl_format ~/.curl_format
-	ln -snf $(PWD)/ghostty.config ~/.config/ghostty/config
+	ln -snf $(PWD)/gitconfig $(HOME_DIR)/.gitconfig
+	ln -snf $(PWD)/gitignore_global $(HOME_DIR)/.gitignore_global
+	ln -snf $(PWD)/zsh/zshrc $(HOME_DIR)/.zshrc
+	ln -snf $(PWD)/zsh/zprofile $(HOME_DIR)/.zprofile
+	ln -snf $(PWD)/zsh/zsh_aliases $(HOME_DIR)/.zsh_aliases
+	ln -snf $(PWD)/kubectl_aliases.fish $(HOME_DIR)/.kubectl_aliases.fish
+	ln -snf $(PWD)/tmux.conf $(HOME_DIR)/.config/tmux/tmux.conf
+	ln -snf $(PWD)/tmux.conf $(HOME_DIR)/.tmux.conf
+	ln -snf $(PWD)/curl_format $(HOME_DIR)/.curl_format
+	ln -snf $(PWD)/ghostty.config $(HOME_DIR)/.config/ghostty/config
 
 clean:
 	rm -rfv ~/.config/nvim
