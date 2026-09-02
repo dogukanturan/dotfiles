@@ -4,9 +4,6 @@ HOME_DIR := $(HOME)
 
 all: sync
 
-sync:
-	mkdir -p $(HOME_DIR)/source/devops/dev/
-	mkdir -p $(HOME_DIR)/source/devops/ops
 	mkdir -p $(HOME_DIR)/.config/ghostty
 	mkdir -p $(HOME_DIR)/.config/tmux
 	mkdir -p $(HOME_DIR)/.config
